@@ -22,7 +22,8 @@ class Container {
   async save(object) {
     const data = await this.getAll();
     if (data.length) {
-      const product = await { ...object, id: data[data.length-1].id+1 };
+      const idPrev = parseInt(data[data.length-1].id)
+      const product = await { ...object, id: idPrev+1 };
       data.push(product);
     } else {
       const product = await { ...object, id: 1 };
@@ -52,7 +53,7 @@ class Container {
     try {
       const data = await this.getAll();
       const productIndex = data.findIndex(e => e.id == productId);
-      if (productIndex>0) {
+      if (productIndex>=0) {
         const updatedObject = await { ...object, id: productId };
         data[productIndex] = updatedObject;  
         await fs.promises.writeFile(this.name, JSON.stringify(data));
@@ -70,7 +71,7 @@ class Container {
     try {
       const data = await this.getAll();
       const productIndex = data.findIndex(e => e.id == productId);
-      if (productIndex>0) {
+      if (productIndex>=0) {
         data.splice(productIndex, 1);
         await fs.promises.writeFile(this.name, JSON.stringify(data));
         return `Se eliminó correctamente el archivo con Id ${productId}`;

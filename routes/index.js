@@ -18,8 +18,8 @@ function serverRoutes(app) {
 
   // Devuelve un producto segun id
   router.get('/:id', (req, res) => {
-    const productId = req.params;
-    const object = db.getById(productId);
+    const { id } = req.params;
+    const object = db.getById(id);
     object.then(response => {
       if (response) {
         res.json(response);
@@ -41,9 +41,9 @@ function serverRoutes(app) {
 
   // Recibe y actualiza un producto segun id
   router.put('/:id', (req, res) => {
-    const productId = req.params;
+    const { id } = req.params;
     const obj = req.body;
-    const updatedObj = db.updateById(productId, obj);
+    const updatedObj = db.updateById(id, obj);
     updatedObj.then( response => {
       if (response) {
         res.json(response);
@@ -55,8 +55,8 @@ function serverRoutes(app) {
 
   // Elimina producto segun id
   router.delete('/:id', (req, res) => {
-    const productId = req.params;
-    const savedObj = db.deleteById(productId);
+    const { id } = req.params;
+    const savedObj = db.deleteById(id);
     savedObj.then( response => {
       if (response) {
         res.json(response);
